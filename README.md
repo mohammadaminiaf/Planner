@@ -1,16 +1,15 @@
-# planner
+# Planner
 
-A new Flutter project.
+Todo App for professionals. Organize your days by writing you most important tasks.
 
-## Getting Started
+## App's main features:
+* Fast and Secure
+* Simple to use.
+* Minimal UI.
 
-This project is a starting point for a Flutter application.
+## Developer Contact:
+Linked In: https://www.linkedin.com/in/mohammad-zamani-b16591269
+YouTube: https://www.youtube.com/@codeheadq
+X: https://twitter.com/MohAmini313?t=l0CXw580I_cjxfGiM6Av2A&s=08 
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
