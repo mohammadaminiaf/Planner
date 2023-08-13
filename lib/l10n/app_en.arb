@@ -1,0 +1,233 @@
+{
+    "appName": "Planner",
+    "@appName":{
+      "description": "The App Name"
+    },
+    "appMotto": "Do it Now",
+    "@appMotto":{
+      "description": "The app's motto"
+    },
+    "tasks": "Tasks",
+    "@tasks":{
+      "description": "Shows number of tasks"
+    },
+    "title": "Title",
+    "@title":{
+      "description": "Task title"
+    },
+    "descriptions": "Descriptions",
+    "@description":{
+      "description": "Task descriptions"
+    },
+    
+    "showNotificationAt": "Show Notification At",
+    "@showNotificationAt":{
+      "description": "Show Notification Caption"
+    },
+    "add": "Add",
+    "@add":{
+      "description": "Add button caption"
+    },
+    "addTask": "Add Task",
+    "@addTask":{
+      "description": "Add Task Title Text"
+    },
+    "priority": "Priority",
+    "@priority":{
+      "description": "Task priority"
+    },
+    "titleErrorMessage": "Please enter a task title",
+    "@titleErrorMessage":{
+      "description": "Show this message when title is invalid"
+    },
+    "deleteDialogTitle": "Delete Task",
+    "@deleteDialogTitle":{
+      "description": "Task delete dialog title text"
+    },
+    "deleteDialogContent": "This task will be deleted. Are you sure to delete this task?",
+    "@titleErrorMessage":{
+      "description": "Show this message when title is invalid"
+    },
+    "no": "No",
+    "@no":{
+      "description": "No respond to a dialog"
+    },
+    "yes": "Yes",
+    "@yes":{
+      "description": "Yes respond to a dialog"
+    },
+    "planner": "Planner",
+    "@planner":{
+      "description": "English name of the app"
+    },
+    "usage": "Usage",
+    "@usage":{
+      "description": "explains how to use the app"
+    },
+
+    "aboutTheAuthors": "About The Authors",
+    "@aboutTheAuthors":{
+      "description": "About people who created the app"
+    },
+
+    "plannerExplanation": "Planner is a simple yet functional app for recording your routines Which will help you with managing your time and daily tasks. You can write your daily routines in it and set deadline for them to get notified when you need to perform them.",
+    "@plannerExplanation":{
+      "description": "Explains what Planner app is."
+    },
+
+    "usageExplanation": "You can create a new task by pressing the + button.\nTo delete a task swipe it to left or right and then confirm the delete\nDouble tap on a task to update it\nYou can also long press on a task to move it to a desired position.",
+    "@usageExplanation":{
+      "description": "Details of how to use planner app."
+    },
+
+    "aboutTheAuthorsDetails": "Programmer: Mohammad Amini\nDesigned by: Mohammad Amin Zamani\nDeveloped by: Montazeran Ring",
+    "@aboutTheAuthorsDetails":{
+      "description": "Details about authors of the Planner app"
+    },
+
+    "closeSnackBarMessage": "Double tap to close the app.",
+    "@closeSnackBarMessage":{
+      "description": "This message is shown when you hit back button at first screen."
+    },
+
+    "aboutTheAppText": "About The App",
+    "@aboutTheAppText":{
+      "description": "About The App Screen AppBar text"
+    },
+
+    "exitDialogTitle": "Add at least 5 tasks",
+    "@exitDialogTitle":{
+      "description": "Dialog title when try to exit app without adding 5 tasks"
+    },
+
+    "exitDialogContent": "Adding at least 5 tasks to your daily tasks will help you manage your time better.",
+    "@exitDialogContent":{
+      "description": "Dialog content when try to exit app without adding 5 tasks"
+    },
+
+    "exitDialogPositiveRespond": "Exit app",
+    "@exitDialogPositiveRespond":{
+      "description": "Dialog yes answer when try to exit app without adding 5 tasks"
+    },
+
+    "exitDialogNegativeRespond": "Sure",
+    "@exitDialogNegativeRespond":{
+      "description": "Dialog no answer when try to exit app without adding 5 tasks"
+    },
+
+    "tutorial": "Tutorial",
+    "@tutorial":{
+      "description": "Tutorial page to learn how to use the app"
+    },
+
+    "aboutTheApp": "About The App",
+    "@aboutTheApp":{
+      "description": "Add description page"
+    },
+
+    "aboutTheGroup": "About The Group",
+    "@aboutTheGroup":{
+      "description": "Tells you about our ring and its goals"
+    },
+
+    "update": "Update",
+    "@update":{
+      "description": "Update task text"
+    },
+
+    "edit": "Edit",
+    "@edit":{
+      "description": "Edit button label"
+    },
+
+    "delete": "Delete",
+    "@delete":{
+      "description": "Delete button label"
+    },
+
+    "congratulations": "Congratulations!",
+    "@congratulations":{
+      "description": "Success Dialog title"
+    },
+
+    "successDialogMessage": "You have successfully achieved all your goals for today",
+    "@successDialogMessage":{
+      "description": "Success dialog message"
+    },
+
+    "rockAgain": "Rock Again!",
+    "@rockAgain":{
+      "description": "Rock Again text"
+    },
+
+    "low": "Low",
+    "@low":{
+      "description": "Low priority of a task"
+    },
+
+    "medium": "Medium",
+    "@medium":{
+      "description": "Medium priority of a task"
+    },
+
+    "high": "High",
+    "@high":{
+      "description": "High priority of a task"
+    },
+
+    "all": "All",
+    "@all":{
+      "description": "button label to filter tasks and show all tasks"
+    },
+
+    "done": "Done",
+    "@done":{
+      "description": "button label to filter tasks and only show done tasks"
+    },
+
+    "notDone": "Not done",
+    "@notDone":{
+      "description": "button label to filter tasks and only show tasks that are not done"
+    },
+
+    "cancel": "Cancel",
+    "@cancel":{
+      "description": "Cancel deleting a task button label"
+    },
+
+    "settings": "Settings",
+    "@settings":{
+      "description": "Settings label for main drawer to navigate to settings screen"
+    },
+
+    "language": "Language",
+    "@language":{
+      "description": "Language text"
+    },
+
+    "languages": "Languages",
+    "@languages":{
+      "description": "Languages text"
+    },
+
+    "general": "General",
+    "@general":{
+      "description": "General settings category title"
+    },
+
+    ""
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
