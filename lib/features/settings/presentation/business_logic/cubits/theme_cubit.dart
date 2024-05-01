@@ -43,4 +43,6 @@ class ThemeCubit extends Cubit<AppThemeMode> {
     final themeMode = await getCurrentThemeUsecase(NoParams());
     return themeMode;
   }
+
+  // TODO: I will add more features here
 }
