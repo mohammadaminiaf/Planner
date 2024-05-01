@@ -213,9 +213,7 @@
     "general": "General",
     "@general":{
       "description": "General settings category title"
-    },
-
-    ""
+    }
 }
 
 

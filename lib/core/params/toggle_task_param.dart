@@ -1,4 +1,4 @@
-import '/features/add_tasks/domain/entities/task.dart';
+import '/features/tasks/domain/entities/task.dart';
 
 class ToggleTaskParam {
   final Task task;

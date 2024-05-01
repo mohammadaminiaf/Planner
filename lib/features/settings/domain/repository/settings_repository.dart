@@ -1,4 +1,7 @@
 abstract class SettingsRepository {
-  Future<void> changeLocale(String locale);
-  String? getCurrentLocale();
+  Future<String> changeLocale(String locale);
+  Future<String> getCurrentLocale();
+
+  Future<String> changeTheme(String themeMode);
+  Future<String> getCurrentTheme();
 }

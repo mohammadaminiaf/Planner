@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 const modalDialogBoxDecoration = BoxDecoration(
-  color: Colors.white,
   borderRadius: BorderRadius.only(
     topRight: Radius.circular(16),
     topLeft: Radius.circular(16),

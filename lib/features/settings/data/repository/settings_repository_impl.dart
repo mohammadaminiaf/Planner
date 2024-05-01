@@ -1,16 +1,32 @@
-import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '/features/settings/constants/constants.dart';
 import '/features/settings/domain/repository/settings_repository.dart';
 
 class SettingsRepositoryImpl extends SettingsRepository {
   @override
-  Future<void> changeLocale(String locale) async {
-    await Hive.box('settings').put('locale', locale);
+  Future<String> changeLocale(String locale) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(Constants.locale, locale);
+    return locale;
   }
 
   @override
-  String? getCurrentLocale() {
-    final locale = Hive.box('settings').get('locale') as String?;
-    return locale;
+  Future<String> getCurrentLocale() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(Constants.locale) ?? 'en';
+  }
+
+  @override
+  Future<String> changeTheme(String themeMode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(Constants.themeMode, themeMode);
+    return themeMode;
+  }
+
+  @override
+  Future<String> getCurrentTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(Constants.themeMode) ?? 'light';
   }
 }

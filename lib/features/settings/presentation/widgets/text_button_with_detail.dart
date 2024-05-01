@@ -17,6 +17,7 @@ class TextButtonWithDetail extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: ListTile(
+        contentPadding: EdgeInsets.zero,
         title: Text(title),
         subtitle: subtitle,
       ),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:planner/features/tasks/presentation/bloc/tasks_bloc.dart';
 
-import '/core/providers/tasks_provider.dart';
 import '/core/widgets/empty_rounded_button.dart';
 import '/core/widgets/filled_rounded_button.dart';
 
 class DeleteDialog extends StatelessWidget {
-  final String id;
+  final int id;
   final int index;
 
   const DeleteDialog({
@@ -76,16 +76,12 @@ class DeleteDialog extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: Consumer(
-                  builder: (context, ref, child) {
-                    return FilledRoundedButton(
-                      title: AppLocalizations.of(context)!.delete,
-                      color: Colors.red,
-                      onPressed: () {
-                        ref.read(tasksProvider.notifier).deleteTask(id, index);
-                        Navigator.pop(context, true);
-                      },
-                    );
+                child: FilledRoundedButton(
+                  title: AppLocalizations.of(context)!.delete,
+                  color: Colors.red,
+                  onPressed: () {
+                    context.read<TasksBloc>().add(DeleteTaskEvent(id: id));
+                    Navigator.pop(context, true);
                   },
                 ),
               ),

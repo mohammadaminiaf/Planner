@@ -1,11 +1,11 @@
-package com.topdevelopers.planner
+/*
+import com.topdevelopers.planner.R
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import io.flutter.embedding.android.SplashScreen
-import com.topdevelopers.planner.R
 
 class SplashView : SplashScreen {
     override fun createSplashView(context: Context, savedInstanceState: Bundle?): View? =
@@ -15,3 +15,4 @@ class SplashView : SplashScreen {
         onTransitionComplete.run()
     }
 }
+*/
