@@ -32,12 +32,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   bool _isButtonActive = true;
 
   /// Text Field variables
-  DateTime startDate = DateTime.now();
-  DateTime endDate = DateTime.now();
-  DateTime dateCreated = DateTime.now();
-  DateTime dateUpdated = DateTime.now();
-  bool isCompleted = false;
-  TaskPriority priority = TaskPriority.medium;
+  DateTime _startDate = DateTime.now();
+  DateTime _endDate = DateTime.now();
+  DateTime _dateCreated = DateTime.now();
+  DateTime _dateUpdated = DateTime.now();
+  DateTime? _notifyAt = DateTime.now();
+  bool _isCompleted = false;
+  TaskPriority _priority = TaskPriority.medium;
 
   //& Text Editing controllers
   late TextEditingController titleController;
@@ -58,12 +59,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     if (widget.task != null) {
       descriptionController.text = widget.task!.description;
       titleController.text = widget.task!.title;
-      startDate = widget.task!.startDate;
-      endDate = widget.task!.endDate;
-      dateCreated = widget.task!.dateCreated;
-      dateUpdated = widget.task!.dateUpdated;
-      priority = widget.task!.priority;
-      isCompleted = widget.task!.isCompleted;
+      _startDate = widget.task!.startDate;
+      _endDate = widget.task!.endDate;
+      _dateCreated = widget.task!.dateCreated;
+      _dateUpdated = widget.task!.dateUpdated;
+      _notifyAt = widget.task!.notifyAt;
+      _priority = widget.task!.priority;
+      _isCompleted = widget.task!.isCompleted;
     }
   }
 
@@ -93,7 +95,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           SaveTaskButton(
             isButtonActive: _isButtonActive,
             onPressed: () => _submit(
-              isCompleted: isCompleted,
+              isCompleted: _isCompleted,
               context: context,
             ),
           ),
@@ -113,27 +115,30 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     //! Pass normal fields
                     titleController: titleController,
                     descriptionController: descriptionController,
-                    priority: priority,
-                    startDate: startDate,
-                    endDate: endDate,
-
+                    priority: _priority,
+                    startDate: _startDate,
+                    endDate: _endDate,
+                    notifyAt: _notifyAt,
                     //! Pass value changed methods
                     onPrioirtyChanged: (priority) => setState(() {
-                      this.priority = priority;
+                      _priority = priority;
                     }),
                     onStartDateChanged: (startDate) => setState(() {
-                      this.startDate = startDate ?? DateTime.now();
+                      _startDate = startDate ?? DateTime.now();
                     }),
                     onEndDateChanged: (endDate) => setState(() {
-                      this.endDate = endDate ?? DateTime.now();
+                      _endDate = endDate ?? DateTime.now();
                     }),
+                    onNotifyAtChanged: (notifyAt) {
+                      _notifyAt = notifyAt;
+                    },
                   ),
                   const SizedBox(height: 20),
                   AddUpdateTaskButton(
                     isAdding: widget.task == null,
                     onPressed: _isButtonActive
                         ? () => _submit(
-                              isCompleted: isCompleted,
+                              isCompleted: _isCompleted,
                               context: context,
                             )
                         : null,
@@ -192,14 +197,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   Future addTask() async {
     final task = Task(
-      priority: priority,
+      priority: _priority,
       title: titleController.text,
       description: descriptionController.text,
-      isCompleted: isCompleted,
-      dateCreated: dateCreated,
-      dateUpdated: dateUpdated,
-      endDate: endDate,
-      startDate: startDate,
+      isCompleted: _isCompleted,
+      dateCreated: _dateCreated,
+      dateUpdated: _dateUpdated,
+      endDate: _endDate,
+      startDate: _startDate,
     );
 
     context.read<TasksBloc>().add(AddTaskEvent(task: task));
@@ -209,11 +214,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     final task = widget.task!.copyWith(
       title: titleController.text,
       description: descriptionController.text,
-      priority: priority,
-      dateCreated: dateCreated,
-      dateUpdated: dateUpdated,
-      startDate: startDate,
-      endDate: endDate,
+      priority: _priority,
+      dateCreated: _dateCreated,
+      dateUpdated: _dateUpdated,
+      startDate: _startDate,
+      endDate: _endDate,
     );
     context.read<TasksBloc>().add(UpdateTaskEvent(task: task));
   }

@@ -23,10 +23,10 @@ class TaskRepositoryImpl extends TaskRepository {
   }
 
   @override
-  Future<void> markTaskAsCompleted(MarkTaskAsCompletedParams params) async {
+  Future<void> markTaskAsCompleted(MarkTaskAsCompletedParams param) async {
     await TasksDatabase.instance.markTaskAsCompleted(
-      id: params.id,
-      isCompleted: params.isCompleted,
+      id: param.id,
+      isCompleted: param.isCompleted,
     );
   }
 

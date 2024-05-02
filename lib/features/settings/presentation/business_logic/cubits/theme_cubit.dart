@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:planner/app/theme/app_theme.dart';
 
 import '/core/usecase/usecases.dart';
-import '/app/theme/color_schemes.g.dart';
 import '/features/settings/constants/constants.dart';
 import '/features/settings/domain/usecases/change_theme_usecase.dart';
 import '/features/settings/domain/usecases/get_current_theme_usecase.dart';
@@ -25,9 +23,6 @@ class ThemeCubit extends Cubit<AppThemeMode> {
       ? Constants.lightTheme
       : Constants.darkTheme;
 
-  static ThemeData get _lightTheme => AppTheme.lightTheme;
-  static ThemeData get _darkTheme => AppTheme.darkTheme;
-
   Future<void> _fetchCurrentTheme() async {
     final themeMode = await getCurrentThemeUsecase(NoParams());
     // Directly emit themeMode string instead of ThemeMode
@@ -43,6 +38,4 @@ class ThemeCubit extends Cubit<AppThemeMode> {
     final themeMode = await getCurrentThemeUsecase(NoParams());
     return themeMode;
   }
-
-  // TODO: I will add more features here
 }

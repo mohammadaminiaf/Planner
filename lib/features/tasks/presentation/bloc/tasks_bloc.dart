@@ -144,8 +144,6 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
         await sortTaskUsecase(event.isDescending);
         final tasks = await getAllTasksUsecase(NoParams());
 
-        print(tasks);
-
         emit(TasksLoaded(tasks: tasks));
       } catch (e) {
         emit(const TasksError(error: 'Failed to retrieve tasks'));

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '/app/theme/app_colors.dart';
 import '/core/utils/extensions.dart';
 
 class TaskSubtitleWidget extends StatelessWidget {

@@ -13,7 +13,8 @@ class TaskFields {
     priority,
     isCompleted,
     startDate,
-    endDate
+    endDate,
+    notifyAt,
   ];
 
   // Define column names for tasks table
@@ -26,6 +27,7 @@ class TaskFields {
   static const String priority = 'priority';
   static const String startDate = 'startDate';
   static const String endDate = 'endDate';
+  static const String notifyAt = 'notifyAt';
 }
 
 class Task {
@@ -38,6 +40,7 @@ class Task {
   final TaskPriority priority;
   final DateTime startDate;
   final DateTime endDate;
+  final DateTime? notifyAt;
 
   Task({
     this.id,
@@ -49,6 +52,7 @@ class Task {
     required this.priority,
     required this.startDate,
     required this.endDate,
+    this.notifyAt,
   });
 
   @override
@@ -64,6 +68,7 @@ class Task {
     DateTime? endDate,
     bool? isCompleted,
     TaskPriority? priority,
+    DateTime? notifyAt,
   }) =>
       Task(
         id: id ?? this.id,
@@ -75,6 +80,7 @@ class Task {
         priority: priority ?? this.priority,
         startDate: startDate ?? this.startDate,
         endDate: endDate ?? this.endDate,
+        notifyAt: notifyAt ?? this.notifyAt,
       );
 
   Map<String, dynamic> toMap() {
@@ -88,6 +94,9 @@ class Task {
       TaskFields.priority: priority.fromEnumToString(),
       TaskFields.startDate: startDate.toIso8601String(),
       TaskFields.endDate: endDate.toIso8601String(),
+      TaskFields.notifyAt: notifyAt != null
+          ? notifyAt!.toIso8601String()
+          : DateTime.now().toIso8601String(),
     };
   }
 
@@ -102,6 +111,7 @@ class Task {
       priority: (map[TaskFields.priority] as String).toEnum(),
       startDate: DateTime.parse(map[TaskFields.startDate] as String),
       endDate: DateTime.parse(map[TaskFields.endDate] as String),
+      notifyAt: DateTime.parse(map[TaskFields.notifyAt] as String),
     );
   }
 }

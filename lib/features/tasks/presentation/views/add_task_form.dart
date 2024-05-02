@@ -15,9 +15,11 @@ class AddTaskForm extends StatelessWidget {
     required this.onPrioirtyChanged,
     required this.onStartDateChanged,
     required this.onEndDateChanged,
+    required this.onNotifyAtChanged,
     required this.priority,
     required this.startDate,
     required this.endDate,
+    required this.notifyAt,
   });
 
   final TextEditingController titleController;
@@ -25,9 +27,11 @@ class AddTaskForm extends StatelessWidget {
   final ValueChanged<TaskPriority> onPrioirtyChanged;
   final ValueChanged<DateTime?> onStartDateChanged;
   final ValueChanged<DateTime?> onEndDateChanged;
+  final ValueChanged<DateTime?> onNotifyAtChanged;
   final TaskPriority priority;
   final DateTime startDate;
   final DateTime endDate;
+  final DateTime? notifyAt;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +61,11 @@ class AddTaskForm extends StatelessWidget {
           dateTime: endDate.format(),
           label: 'End Date: ',
           onPickDate: onEndDateChanged,
+        ),
+        PickDateWidget(
+          dateTime: notifyAt != null ? notifyAt!.format() : 'No Date Provided',
+          label: 'Show Notifications At: ',
+          onPickDate: onNotifyAtChanged,
         ),
       ],
     );
