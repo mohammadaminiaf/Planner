@@ -6,4 +6,7 @@
     <item>
         <bitmap android:gravity="fill" android:src="@drawable/splash"/>
     </item>
+    <item>
+        <bitmap android:gravity="fill" android:src="@drawable/launcher_icon"/>
+    </item>
 </layer-list>

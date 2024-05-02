@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:planner/app/theme/app_theme.dart';
-import 'package:planner/features/settings/constants/constants.dart';
 
-import '/core/screens/home_screen.dart';
+import '/app/theme/app_theme.dart';
+import '/features/notifications/notifications.dart';
+import '/features/notifications/presentation/screens/notifications_test_screen.dart';
+import '/features/settings/constants/constants.dart';
 import '/features/settings/presentation/business_logic/cubits/locale_cubit.dart';
 import '/features/settings/presentation/business_logic/cubits/theme_cubit.dart';
 import '/features/tasks/presentation/bloc/tasks_bloc.dart';
@@ -16,6 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // init locator
   await setup();
+  setupNotifications();
   runApp(
     const MyApp(),
   );
@@ -74,7 +76,7 @@ class MyApp extends StatelessWidget {
                 ],
                 debugShowCheckedModeBanner: false,
                 locale: Locale(locale),
-                home: const HomeScreen(),
+                home: const NotificationsTest(),
               );
             },
           );
