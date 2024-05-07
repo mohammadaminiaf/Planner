@@ -8,6 +8,7 @@ class AddTaskFab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      shape: const CircleBorder(),
       child: const Icon(Icons.add),
       onPressed: () {
         Navigator.of(context).push(

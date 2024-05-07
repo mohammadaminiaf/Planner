@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +10,6 @@ import '/features/tasks/data/data_source/local/tasks_database.dart';
 import '/features/tasks/data/models/task_priority.dart';
 import '/features/tasks/presentation/bloc/tasks_bloc.dart';
 import '/features/tasks/presentation/views/tasks_list.dart';
-import '/features/tasks/presentation/widgets/add_task_fab.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({
@@ -20,6 +18,8 @@ class TasksScreen extends StatefulWidget {
   }) : super(key: key);
 
   final String? payload;
+
+  static const routeName = '/tasks-screen';
 
   @override
   State<TasksScreen> createState() => _TasksScreenState();
@@ -37,111 +37,63 @@ class _TasksScreenState extends State<TasksScreen> {
     isDescending = prefs.getBool(Constants.isDesending) ?? true;
   }
 
-  DateTime? lastPressed;
   bool isFabVisible = true;
   bool isDescending = true;
 
-  Future<bool?> shouldPopScreen(bool willPop) async {
-    DateTime now = DateTime.now();
-    const maxDuration = Duration(seconds: 2);
-    bool isWarning =
-        lastPressed == null || now.difference(lastPressed!) > maxDuration;
-
-    if (isWarning) {
-      lastPressed = DateTime.now();
-      final snackBar = SnackBar(
-        content: Text(
-          AppLocalizations.of(context)!.closeSnackBarMessage,
-        ),
-        duration: maxDuration,
-      );
-
-      ScaffoldMessenger.of(context)
-        ..removeCurrentSnackBar()
-        ..showSnackBar(snackBar);
-
-      return false;
-    } else {
-      // if (boxLength < 5) {
-      //   showDialog(
-      //     context: context,
-      //     builder: (context) {
-      //       return const ExitDialog();
-      //     },
-      //   );
-      // }
-      return true;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      onPopInvoked: shouldPopScreen,
-      child: Scaffold(
-        floatingActionButton: isFabVisible ? const AddTaskFab() : null,
-        body: NotificationListener<UserScrollNotification>(
-          onNotification: (notification) {
-            if (notification.direction == ScrollDirection.forward) {
-              if (!isFabVisible) setState(() => isFabVisible = true);
-            } else if (notification.direction == ScrollDirection.reverse) {
-              if (isFabVisible) setState(() => isFabVisible = false);
-            }
-            return true;
-          },
-          child: FutureBuilder(
-            future: TasksDatabase.instance.database,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const LoadingScreen();
-              }
+    return Scaffold(
+      body: FutureBuilder(
+        future: TasksDatabase.instance.database,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LoadingScreen();
+          }
 
-              if (snapshot.data != null) {
-                context.read<TasksBloc>().add(const GetAllTasksEvent());
-                return BlocBuilder<TasksBloc, TasksState>(
-                  builder: (context, state) {
-                    if (state.tasks != null && state is TasksLoaded) {
-                      return CustomScrollView(
-                        slivers: [
-                          // AppBar
-                          SliverAppBar(
-                            expandedHeight: 100,
-                            collapsedHeight: kToolbarHeight,
-                            title: Text(AppLocalizations.of(context)!.appMotto),
-                            flexibleSpace: AppBarFlexibleSpace(
-                              tasksLength: state.tasksCount,
-                              doneTasks: state.completedTasksCount,
-                            ),
-                            actions: [
-                              SortTaskIconButton(
-                                isDescending: isDescending,
-                                onChanged: (value) {
-                                  isDescending = value;
-                                },
-                              ),
-                              const FilterPopupMenuButton(),
-                            ],
+          if (snapshot.data != null) {
+            context.read<TasksBloc>().add(const GetAllTasksEvent());
+            return BlocBuilder<TasksBloc, TasksState>(
+              builder: (context, state) {
+                if (state.tasks != null && state is TasksLoaded) {
+                  return CustomScrollView(
+                    slivers: [
+                      // AppBar
+                      SliverAppBar(
+                        expandedHeight: 100,
+                        collapsedHeight: kToolbarHeight,
+                        title: Text(AppLocalizations.of(context)!.appMotto),
+                        flexibleSpace: AppBarFlexibleSpace(
+                          tasksLength: state.tasksCount,
+                          doneTasks: state.completedTasksCount,
+                        ),
+                        actions: [
+                          SortTaskIconButton(
+                            isDescending: isDescending,
+                            onChanged: (value) {
+                              isDescending = value;
+                            },
                           ),
-
-                          // List of Tasks
-                          TasksList(
-                            tasks: state.tasks!,
-                          ),
+                          const FilterPopupMenuButton(),
                         ],
-                      );
-                    }
+                      ),
 
-                    return const LoadingScreen();
-                  },
-                );
-              }
+                      // List of Tasks
+                      TasksList(
+                        tasks: state.tasks!,
+                      ),
+                    ],
+                  );
+                }
 
-              return ErrorScreen(
-                error: snapshot.error.toString(),
-              );
-            },
-          ),
-        ),
+                return const LoadingScreen();
+              },
+            );
+          }
+
+          return ErrorScreen(
+            error: snapshot.error.toString(),
+          );
+        },
       ),
     );
   }
@@ -255,7 +207,6 @@ class AppBarFlexibleSpace extends StatelessWidget {
         child: Text(
           '${AppLocalizations.of(context)!.done}\t $doneTasks / $tasksLength',
           style: const TextStyle(
-            color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),

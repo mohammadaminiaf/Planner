@@ -1,11 +1,15 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import '/app/routes/routes.dart';
 import '/app/theme/app_theme.dart';
+import '/core/screens/home_screen.dart';
+import '/features/notifications/domain/controllers/notification_controller.dart';
 import '/features/notifications/notifications.dart';
-import '/features/notifications/presentation/screens/notifications_test_screen.dart';
 import '/features/settings/constants/constants.dart';
 import '/features/settings/presentation/business_logic/cubits/locale_cubit.dart';
 import '/features/settings/presentation/business_logic/cubits/theme_cubit.dart';
@@ -23,8 +27,35 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
+
+  static const String name = 'Awesome Notifications - Example App';
+  static const Color mainColor = Colors.deepPurple;
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    // Only after at least the action method is set, the notification events are delivered
+    AwesomeNotifications().setListeners(
+      onActionReceivedMethod: NotificationController.onActionReceivedMethod,
+      onNotificationCreatedMethod:
+          NotificationController.onNotificationCreatedMethod,
+      onNotificationDisplayedMethod:
+          NotificationController.onNotificationDisplayedMethod,
+      onDismissActionReceivedMethod:
+          NotificationController.onDismissActionReceivedMethod,
+    );
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +95,23 @@ class MyApp extends StatelessWidget {
                   ? ThemeMode.light
                   : ThemeMode.dark;
               return MaterialApp(
+                // The navigator key is necessary to allow to navigate through static methods
+                navigatorKey: MyApp.navigatorKey,
+
+                title: MyApp.name,
+                color: MyApp.mainColor,
+
+                // onGenerateInitialRoutes: (route) => [
+                //   CupertinoPageRoute(
+                //     builder: (_) => const HomeScreen(),
+                //   ),
+                // ],
+
+                initialRoute: '/',
+                onGenerateRoute: Routes.onGenerateRoute,
+
+                // Just to separate notification from ui
+
                 themeMode: themeMode,
                 theme: AppTheme.lightTheme,
                 darkTheme: AppTheme.darkTheme,
@@ -76,7 +124,7 @@ class MyApp extends StatelessWidget {
                 ],
                 debugShowCheckedModeBanner: false,
                 locale: Locale(locale),
-                home: const NotificationsTest(),
+                // home: const HomeScreen(),
               );
             },
           );

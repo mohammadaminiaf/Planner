@@ -1,8 +1,8 @@
 import 'package:path/path.dart';
-import 'package:planner/features/tasks/constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '/features/tasks/constants/constants.dart';
 import '/features/tasks/domain/entities/task.dart';
 
 class TasksDatabase {
@@ -48,6 +48,7 @@ class TasksDatabase {
         ${TaskFields.dateCreated} $textType,
         ${TaskFields.dateUpdated} $textType,
         ${TaskFields.isCompleted} $boolType,
+        ${TaskFields.notifyAt} $textType,
         ${TaskFields.priority} $textType,
         ${TaskFields.startDate} $textType,
         ${TaskFields.endDate} $textType

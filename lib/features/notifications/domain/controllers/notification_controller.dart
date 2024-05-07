@@ -1,4 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:planner/features/tasks/presentation/screens/tasks_screen.dart';
+import 'package:planner/main.dart';
 
 class NotificationController {
   /// Use this method to detect when a new notification or a schedule is created
@@ -29,10 +31,11 @@ class NotificationController {
     // Your code goes here
 
     // Navigate into pages, avoiding to open the notification details page over another details page already opened
-    // MyApp.navigatorKey.currentState?.pushNamedAndRemoveUntil(
-    //     '/notification-page',
-    //     (route) =>
-    //         (route.settings.name != '/notification-page') || route.isFirst,
-    //     arguments: receivedAction);
+    MyApp.navigatorKey.currentState?.pushNamedAndRemoveUntil(
+      TasksScreen.routeName,
+      (route) =>
+          (route.settings.name != TasksScreen.routeName) || route.isFirst,
+      arguments: receivedAction,
+    );
   }
 }

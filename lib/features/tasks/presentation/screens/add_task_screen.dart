@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '/core/constants/constants.dart';
 import '/core/utils/utils.dart';
 import '/core/widgets/delete_dialog.dart';
+import '/features/notifications/utils/utils.dart';
 import '/features/tasks/data/models/task_priority.dart';
 import '/features/tasks/domain/entities/task.dart';
 import '/features/tasks/presentation/bloc/tasks_bloc.dart';
@@ -41,24 +42,24 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   TaskPriority _priority = TaskPriority.medium;
 
   //& Text Editing controllers
-  late TextEditingController titleController;
-  late TextEditingController descriptionController;
+  late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
 
   @override
   void initState() {
     super.initState();
-    titleController = TextEditingController();
-    descriptionController = TextEditingController();
-    titleController.addListener(
+    _titleController = TextEditingController();
+    _descriptionController = TextEditingController();
+    _titleController.addListener(
       () {
-        final isButtonActive = titleController.text.isNotEmpty;
+        final isButtonActive = _titleController.text.isNotEmpty;
         setState(() => _isButtonActive = isButtonActive);
       },
     );
 
     if (widget.task != null) {
-      descriptionController.text = widget.task!.description;
-      titleController.text = widget.task!.title;
+      _descriptionController.text = widget.task!.description;
+      _titleController.text = widget.task!.title;
       _startDate = widget.task!.startDate;
       _endDate = widget.task!.endDate;
       _dateCreated = widget.task!.dateCreated;
@@ -71,8 +72,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   void dispose() {
-    titleController.dispose();
-    descriptionController.dispose();
+    _titleController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -94,7 +95,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           ),
           SaveTaskButton(
             isButtonActive: _isButtonActive,
-            onPressed: () => _submit(
+            onPressed: () => _addUpdateTask(
               isCompleted: _isCompleted,
               context: context,
             ),
@@ -113,8 +114,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 children: [
                   AddTaskForm(
                     //! Pass normal fields
-                    titleController: titleController,
-                    descriptionController: descriptionController,
+                    titleController: _titleController,
+                    descriptionController: _descriptionController,
                     priority: _priority,
                     startDate: _startDate,
                     endDate: _endDate,
@@ -129,15 +130,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     onEndDateChanged: (endDate) => setState(() {
                       _endDate = endDate ?? DateTime.now();
                     }),
-                    onNotifyAtChanged: (notifyAt) {
-                      _notifyAt = notifyAt;
-                    },
+                    onNotifyAtChanged: (notifyAt) => setState(
+                      () => _notifyAt = notifyAt,
+                    ),
                   ),
                   const SizedBox(height: 20),
                   AddUpdateTaskButton(
                     isAdding: widget.task == null,
                     onPressed: _isButtonActive
-                        ? () => _submit(
+                        ? () => _addUpdateTask(
                               isCompleted: _isCompleted,
                               context: context,
                             )
@@ -152,7 +153,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
   }
 
-  void _submit({
+  void _addUpdateTask({
     required bool isCompleted,
     required BuildContext context,
   }) async {
@@ -166,6 +167,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       } else {
         updateTask();
       }
+      showNotification(
+        title: _titleController.text,
+        body: _descriptionController.text,
+        bigPictureUrl: 'assets/images/splash.jfif',
+        largeIconUrl: 'assets/icons/icon.png',
+        dateTime: _notifyAt ?? DateTime.now(),
+      );
       Navigator.of(context).pop();
     }
   }
@@ -198,8 +206,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Future addTask() async {
     final task = Task(
       priority: _priority,
-      title: titleController.text,
-      description: descriptionController.text,
+      title: _titleController.text,
+      description: _descriptionController.text,
       isCompleted: _isCompleted,
       dateCreated: _dateCreated,
       dateUpdated: _dateUpdated,
@@ -212,8 +220,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   Future updateTask() async {
     final task = widget.task!.copyWith(
-      title: titleController.text,
-      description: descriptionController.text,
+      title: _titleController.text,
+      description: _descriptionController.text,
       priority: _priority,
       dateCreated: _dateCreated,
       dateUpdated: _dateUpdated,

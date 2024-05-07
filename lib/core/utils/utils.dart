@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:planner/features/settings/presentation/business_logic/cubits/locale_cubit.dart';
 
 import '/app/theme/app_colors.dart';
+import '/features/settings/presentation/business_logic/cubits/locale_cubit.dart';
 
 void showSnackBar({
   required BuildContext context,
