@@ -1,5 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -8,19 +6,21 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import '/app/routes/routes.dart';
 import '/app/theme/app_theme.dart';
 import '/core/screens/home_screen.dart';
-import '/features/notifications/domain/controllers/notification_controller.dart';
-import '/features/notifications/notifications.dart';
+import '/features/notifications/presentation/bloc/notification_bloc.dart';
+import '/features/notifications/utils/setup_notifications.dart';
 import '/features/settings/constants/constants.dart';
 import '/features/settings/presentation/business_logic/cubits/locale_cubit.dart';
 import '/features/settings/presentation/business_logic/cubits/theme_cubit.dart';
 import '/features/tasks/presentation/bloc/tasks_bloc.dart';
 import '/l10n/l10n.dart';
 import '/locator.dart';
+import '/setup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // init locator
   await setup();
+  // Setup Notifications initials
   setupNotifications();
   runApp(
     const MyApp(),
@@ -43,17 +43,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // Only after at least the action method is set, the notification events are delivered
-    AwesomeNotifications().setListeners(
-      onActionReceivedMethod: NotificationController.onActionReceivedMethod,
-      onNotificationCreatedMethod:
-          NotificationController.onNotificationCreatedMethod,
-      onNotificationDisplayedMethod:
-          NotificationController.onNotificationDisplayedMethod,
-      onDismissActionReceivedMethod:
-          NotificationController.onDismissActionReceivedMethod,
-    );
-
+    setupNotificationListeners();
     super.initState();
   }
 
@@ -86,6 +76,12 @@ class _MyAppState extends State<MyApp> {
             sortTaskUsecase: locator(),
           ),
         ),
+        // Notification Bloc
+        BlocProvider(
+          create: (context) => NotificationBloc(
+            sendNotificationUsecase: locator(),
+          ),
+        ),
       ],
       child: BlocBuilder<LocaleCubit, String>(
         builder: (context, locale) {
@@ -97,21 +93,11 @@ class _MyAppState extends State<MyApp> {
               return MaterialApp(
                 // The navigator key is necessary to allow to navigate through static methods
                 navigatorKey: MyApp.navigatorKey,
-
                 title: MyApp.name,
                 color: MyApp.mainColor,
-
-                // onGenerateInitialRoutes: (route) => [
-                //   CupertinoPageRoute(
-                //     builder: (_) => const HomeScreen(),
-                //   ),
-                // ],
-
+                // Just to separate notification from ui
                 initialRoute: '/',
                 onGenerateRoute: Routes.onGenerateRoute,
-
-                // Just to separate notification from ui
-
                 themeMode: themeMode,
                 theme: AppTheme.lightTheme,
                 darkTheme: AppTheme.darkTheme,
@@ -124,7 +110,7 @@ class _MyAppState extends State<MyApp> {
                 ],
                 debugShowCheckedModeBanner: false,
                 locale: Locale(locale),
-                // home: const HomeScreen(),
+                home: const HomeScreen(),
               );
             },
           );

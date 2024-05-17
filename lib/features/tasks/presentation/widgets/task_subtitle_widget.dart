@@ -6,13 +6,11 @@ class TaskSubtitleWidget extends StatelessWidget {
   const TaskSubtitleWidget({
     Key? key,
     required this.description,
-    required this.endDate,
     required this.startDate,
     required this.isChecked,
   }) : super(key: key);
 
   final String description;
-  final DateTime endDate;
   final DateTime startDate;
   final bool isChecked;
 
@@ -36,7 +34,7 @@ class TaskSubtitleWidget extends StatelessWidget {
               ),
         const SizedBox(height: 5),
         Text(
-          '${startDate.format()} - ${endDate.format()}',
+          startDate.format(),
           style: TextStyle(
             fontSize: 12,
             color: isChecked

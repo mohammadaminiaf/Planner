@@ -39,6 +39,7 @@ class TasksDatabase {
   ) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
+    const nullableTextType = 'TEXT';
     const boolType = 'BOOLEAN NOT NULL';
     await db.execute('''
           CREATE TABLE IF NOT EXISTS $tasksTable (
@@ -48,10 +49,10 @@ class TasksDatabase {
         ${TaskFields.dateCreated} $textType,
         ${TaskFields.dateUpdated} $textType,
         ${TaskFields.isCompleted} $boolType,
-        ${TaskFields.notifyAt} $textType,
+        ${TaskFields.notifyAt} $nullableTextType,
         ${TaskFields.priority} $textType,
         ${TaskFields.startDate} $textType,
-        ${TaskFields.endDate} $textType
+        ${TaskFields.notificationSchedule} $nullableTextType
       )
         ''');
   }

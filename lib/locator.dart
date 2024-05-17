@@ -1,15 +1,20 @@
 import 'package:get_it/get_it.dart';
-import 'package:planner/features/settings/domain/usecases/change_theme_usecase.dart';
-import 'package:planner/features/settings/domain/usecases/get_current_theme_usecase.dart';
-import 'package:planner/features/tasks/domain/usecases/get_sorted_tasks_usecase.dart';
+
+/// Notifications
+import '/features/notifications/domain/repository/notification_repository.dart';
+import '/features/notifications/data/repository/notification_repository_impl.dart';
+import '/features/notifications/domain/usecases/send_notification_usecase.dart';
 
 /// Settings
+import '/features/settings/domain/usecases/change_theme_usecase.dart';
+import '/features/settings/domain/usecases/get_current_theme_usecase.dart';
 import '/features/settings/data/repository/settings_repository_impl.dart';
 import '/features/settings/domain/repository/settings_repository.dart';
 import '/features/settings/domain/usecases/change_locale_usecase.dart';
 import '/features/settings/domain/usecases/get_current_locale_usecase.dart';
 
 /// Tasks
+import '/features/tasks/domain/usecases/get_sorted_tasks_usecase.dart';
 import '/features/tasks/data/repository/task_repository_impl.dart';
 import '/features/tasks/domain/repository/task_repository.dart';
 import '/features/tasks/domain/usecases/add_task_usecase.dart';
@@ -29,6 +34,9 @@ Future<void> setup() async {
   locator.registerSingleton<TaskRepository>(TaskRepositoryImpl());
   //! settings repository
   locator.registerSingleton<SettingsRepository>(SettingsRepositoryImpl());
+  //! notification repository
+  locator
+      .registerSingleton<NotificationRepository>(NotificationRepositoryImpl());
 
   //! Tasks Usecases
   locator.registerSingleton<AddTaskUsecase>(AddTaskUsecase(locator()));
@@ -61,5 +69,10 @@ Future<void> setup() async {
   );
   locator.registerSingleton<GetCurrentThemeUsecase>(
     GetCurrentThemeUsecase(locator()),
+  );
+
+  //! Notification Usecase
+  locator.registerSingleton<SendNotificationUsecase>(
+    SendNotificationUsecase(locator()),
   );
 }

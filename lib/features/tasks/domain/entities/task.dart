@@ -13,8 +13,8 @@ class TaskFields {
     priority,
     isCompleted,
     startDate,
-    endDate,
     notifyAt,
+    notificationSchedule,
   ];
 
   // Define column names for tasks table
@@ -26,8 +26,8 @@ class TaskFields {
   static const String isCompleted = 'isCompleted';
   static const String priority = 'priority';
   static const String startDate = 'startDate';
-  static const String endDate = 'endDate';
   static const String notifyAt = 'notifyAt';
+  static const String notificationSchedule = 'notificationSchedule';
 }
 
 class Task {
@@ -39,8 +39,8 @@ class Task {
   final bool isCompleted;
   final TaskPriority priority;
   final DateTime startDate;
-  final DateTime endDate;
   final DateTime? notifyAt;
+  final String? notificationSchedule;
 
   Task({
     this.id,
@@ -51,8 +51,8 @@ class Task {
     required this.isCompleted,
     required this.priority,
     required this.startDate,
-    required this.endDate,
     this.notifyAt,
+    this.notificationSchedule,
   });
 
   @override
@@ -69,6 +69,7 @@ class Task {
     bool? isCompleted,
     TaskPriority? priority,
     DateTime? notifyAt,
+    String? notificationSchedule,
   }) =>
       Task(
         id: id ?? this.id,
@@ -79,8 +80,8 @@ class Task {
         isCompleted: isCompleted ?? this.isCompleted,
         priority: priority ?? this.priority,
         startDate: startDate ?? this.startDate,
-        endDate: endDate ?? this.endDate,
         notifyAt: notifyAt ?? this.notifyAt,
+        notificationSchedule: notificationSchedule ?? this.notificationSchedule,
       );
 
   Map<String, dynamic> toMap() {
@@ -93,10 +94,8 @@ class Task {
       TaskFields.isCompleted: isCompleted ? 1 : 0,
       TaskFields.priority: priority.fromEnumToString(),
       TaskFields.startDate: startDate.toIso8601String(),
-      TaskFields.endDate: endDate.toIso8601String(),
-      TaskFields.notifyAt: notifyAt != null
-          ? notifyAt!.toIso8601String()
-          : DateTime.now().toIso8601String(),
+      TaskFields.notifyAt: notifyAt?.toIso8601String(),
+      TaskFields.notificationSchedule: notificationSchedule,
     };
   }
 
@@ -110,8 +109,10 @@ class Task {
       isCompleted: map[TaskFields.isCompleted] == 1,
       priority: (map[TaskFields.priority] as String).toEnum(),
       startDate: DateTime.parse(map[TaskFields.startDate] as String),
-      endDate: DateTime.parse(map[TaskFields.endDate] as String),
-      notifyAt: DateTime.parse(map[TaskFields.notifyAt] as String),
+      notifyAt: map[TaskFields.notifyAt] != null
+          ? DateTime.parse(map[TaskFields.notifyAt] as String)
+          : null,
+      notificationSchedule: map[TaskFields.notificationSchedule],
     );
   }
 }

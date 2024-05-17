@@ -1,6 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:planner/features/tasks/presentation/screens/tasks_screen.dart';
 import 'package:planner/main.dart';
+
+import '/features/tasks/presentation/screens/tasks_screen.dart';
 
 class NotificationController {
   /// Use this method to detect when a new notification or a schedule is created

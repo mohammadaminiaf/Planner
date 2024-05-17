@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 void setupNotifications() {
   AwesomeNotifications().initialize(
     // set the icon to null if you want to use the default app icon
-    // null,
     'resource://drawable/launcher_icon',
     [
       NotificationChannel(

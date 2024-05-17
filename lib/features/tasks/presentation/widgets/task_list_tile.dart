@@ -47,7 +47,7 @@ class TaskListTile extends StatelessWidget {
       subtitle: TaskSubtitleWidget(
         description: task.description,
         startDate: task.startDate,
-        endDate: task.endDate,
+        // endDate: task.endDate,
         isChecked: task.isCompleted,
       ),
       //! Tailing part of the List Tile

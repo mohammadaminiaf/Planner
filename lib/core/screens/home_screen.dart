@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '/features/settings/presentation/screens/settings_screen.dart';
@@ -59,7 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
 
-    Navigator.pop(context);
+    // Navigator.pop(context);
+    SystemNavigator.pop();
+    SystemNavigator.pop();
   }
 
   @override

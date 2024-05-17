@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '/features/notifications/utils/utils.dart';
 
 class NotificationsTest extends StatefulWidget {
   const NotificationsTest({super.key});
@@ -26,13 +25,7 @@ class _NotificationsTestState extends State<NotificationsTest> {
             const SizedBox(width: double.infinity),
             ElevatedButton(
               onPressed: () {
-                showNotification(
-                  title: 'Task Time',
-                  body: 'Task needs to be perfomed or ignored',
-                  bigPictureUrl: 'assets/images/splash.jfif',
-                  largeIconUrl: 'assets/icons/icon3.png',
-                  dateTime: DateTime.now(),
-                );
+                // TODO: To show Notification, now you need to use bloc to call the show notification method.
               },
               child: const Text('Show Notifications'),
             ),

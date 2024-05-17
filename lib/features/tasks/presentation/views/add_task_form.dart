@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '/core/utils/extensions.dart';
 import '/core/utils/utils.dart';
+import '/features/notifications/enums/notification_enum.dart';
+import '/features/notifications/presentation/widgets/select_notification_widget.dart';
 import '/features/tasks/data/models/task_priority.dart';
 import '/features/tasks/presentation/widgets/description_text_field.dart';
 import '/features/tasks/presentation/widgets/priority_dropdown_button.dart';
@@ -14,28 +16,31 @@ class AddTaskForm extends StatelessWidget {
     required this.descriptionController,
     required this.onPrioirtyChanged,
     required this.onStartDateChanged,
-    required this.onEndDateChanged,
     required this.onNotifyAtChanged,
+    required this.onNotificationScheduleChanged,
+    required this.resetIf,
     required this.priority,
     required this.startDate,
-    required this.endDate,
     required this.notifyAt,
+    required this.notificationSchedule,
   });
 
   final TextEditingController titleController;
   final TextEditingController descriptionController;
   final ValueChanged<TaskPriority> onPrioirtyChanged;
   final ValueChanged<DateTime?> onStartDateChanged;
-  final ValueChanged<DateTime?> onEndDateChanged;
   final ValueChanged<DateTime?> onNotifyAtChanged;
+  final ValueChanged<String?> onNotificationScheduleChanged;
+  final bool Function() resetIf;
   final TaskPriority priority;
   final DateTime startDate;
-  final DateTime endDate;
   final DateTime? notifyAt;
+  final String? notificationSchedule;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         //! Title text form field
         TitleTextField(
@@ -54,21 +59,49 @@ class AddTaskForm extends StatelessWidget {
         //! Start Date Picker
         PickDateWidget(
           dateTime: startDate.format(),
-          label: 'Start Date: ',
+          label: 'Date: ',
           onPickDate: onStartDateChanged,
         ),
-        PickDateWidget(
-          dateTime: endDate.format(),
-          label: 'End Date: ',
-          onPickDate: onEndDateChanged,
-        ),
-        PickDateWidget(
-          dateTime: notifyAt != null ? notifyAt!.format() : 'No Date Provided',
-          label: 'Show Notifications At: ',
-          onPickDate: onNotifyAtChanged,
+
+        const SizedBox(height: 20),
+
+        // Show Notification
+        const Text('Show Notifications At: '),
+
+        const SizedBox(height: 10),
+
+        SelectNotificationWidget(
+          resetIf: resetIf,
+          onSelected: (NotificationEnum item) {
+            /// Since notification is shown before the task's start date
+            /// I'm gonna check the task's start date and show notification
+            /// before that (according to the selected index)
+
+            final minutesBeforeStartDate = item.durationInMinutes;
+
+            final notifyAt = startDate.subtract(
+              Duration(minutes: minutesBeforeStartDate),
+            );
+
+            onNotifyAtChanged(notifyAt);
+            onNotificationScheduleChanged(item.name);
+          },
+          values: NotificationEnum.values,
+          selectedButtonColor: Colors.red,
+          unselectedButtonColor: Colors.red.shade200,
+          selectedValue: pickSelectedValue(),
         ),
       ],
     );
+  }
+
+  NotificationEnum? pickSelectedValue() {
+    if (notificationSchedule != null) {
+      if (notifyAt != null && notifyAt!.isAfter(DateTime.now())) {
+        return NotificationEnum.fromStringToEnum(notificationSchedule!);
+      }
+    }
+    return null;
   }
 }
 
